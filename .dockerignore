@@ -1,0 +1,8 @@
+Dockerfile*
+
+.dockerignore
+
+# Public assets (optional, if generated dynamically)
+public/
+
+init-sql/

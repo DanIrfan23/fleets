@@ -1,0 +1,23 @@
+services:
+  fleets-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fleets-api
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - MYSQL_HOST=${DB_HOST}
+      - MYSQL_PORT=${DB_PORT}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE_NAME=${DB_NAME}
+      - JWT_SECRET_KEY=${TOKENSECRETKEY}
+      - SERVER_PORT=${PORT}
+    env_file:
+      - .env
+    # volumes:
+    #   - profilepics-data:/app/public/profilepics
+
+    # volumes:
+    #   profilepics-data:
