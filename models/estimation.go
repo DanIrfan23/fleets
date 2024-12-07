@@ -12,7 +12,9 @@ import (
 type Estimation struct {
 	ID             int        `json:"id"`
 	CarTypeID      string     `json:"carTypeId"`
+	CarType        string     `json:"carType"`
 	BBMID          string     `json:"bbmId"`
+	BbmDesc        string     `json:"bbmDesc"`
 	FuelEstimation int        `json:"fuelEstimation"`
 	CreatedAt      *time.Time `json:"created_at"`
 	UpdatedAt      *time.Time `json:"updated_at"`
@@ -27,7 +29,7 @@ type EstimationDTO struct {
 func GetAllEstimationQuery() ([]Estimation, error) {
 	db := configs.GetDB()
 
-	query := "SELECT id, ty_car_id, bbm_id, estisi, created_at, updated_at from estimasis"
+	query := "SELECT a.id, a.ty_car_id, b.tyCar, a.bbm_id, c.bbmDesc, a.estisi, a.created_at, a.updated_at from estimasis a left join ty_cars b on a.ty_car_id = b.id left join bbms c on a.bbm_id = c.id"
 	rows, err := db.Query(query)
 	if err != nil {
 		return nil, err
@@ -38,7 +40,7 @@ func GetAllEstimationQuery() ([]Estimation, error) {
 
 	for rows.Next() {
 		var i Estimation
-		if err := rows.Scan(&i.ID, &i.CarTypeID, &i.BBMID, &i.FuelEstimation, &i.CreatedAt, &i.UpdatedAt); err != nil {
+		if err := rows.Scan(&i.ID, &i.CarTypeID, &i.CarType, &i.BBMID, &i.BbmDesc, &i.FuelEstimation, &i.CreatedAt, &i.UpdatedAt); err != nil {
 			return nil, err
 		}
 
@@ -52,9 +54,9 @@ func GetEstimationByIdQuery(id int) (Estimation, error) {
 	db := configs.GetDB()
 	var data Estimation
 
-	query := "SELECT id, ty_car_id, bbm_id, estisi, created_at, updated_at from estimasis WHERE id = ?"
+	query := "SELECT a.id, a.ty_car_id, b.tyCar, a.bbm_id, c.bbmDesc, a.estisi, a.created_at, a.updated_at from estimasis a left join ty_cars b on a.ty_car_id = b.id left join bbms c on a.bbm_id = c.id WHERE a.id = ?"
 	err := db.QueryRow(query, id).Scan(
-		&data.ID, &data.CarTypeID, &data.BBMID, &data.FuelEstimation, &data.CreatedAt, &data.UpdatedAt,
+		&data.ID, &data.CarTypeID, &data.CarType, &data.BBMID, &data.BbmDesc, &data.FuelEstimation, &data.CreatedAt, &data.UpdatedAt,
 	)
 
 	return data, err
@@ -89,7 +91,7 @@ func UpdateEstimationByIdQuery(data *EstimationDTO, id int) error {
 			SET 
 				ty_car_id = ?,
 				bbm_id = ?,
-				esitis = ?
+				estisi = ?
 			WHERE id = ?`
 
 	result, err := db.Exec(query, &data.CarTypeID, &data.BBMID, &data.FuelEstimation, id)

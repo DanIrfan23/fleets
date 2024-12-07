@@ -7,6 +7,7 @@ import (
 )
 
 func ServiceItemRoutes(server *mux.Router) {
+	server.HandleFunc("/service-item/lastid", controllers.GetServiceItemLastIdController()).Methods("GET")
 	server.HandleFunc("/service-item", controllers.GetAllServiceItemController()).Methods("GET")
 	server.HandleFunc("/service-item/{id}", controllers.GetServiceItemByIdController()).Methods("GET")
 	server.HandleFunc("/service-item/{id}", controllers.UpdateServiceItemByIdController()).Methods("PUT")

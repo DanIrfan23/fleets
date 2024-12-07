@@ -14,7 +14,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func GetServiceItemLastId() http.HandlerFunc {
+func GetServiceItemLastIdController() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id, err := models.GetServiceItemNewIdQuery()
 		if err != nil {

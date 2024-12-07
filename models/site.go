@@ -82,7 +82,7 @@ func CreateNewSiteQuery(formData *SiteDTO) error {
 func UpdateSiteByIdQuery(data *SiteDTO, id string) error {
 	db := configs.GetDB()
 	query := `
-			UPDATE invents
+			UPDATE sites
 			SET 
 				siteName = ?,
 				siteAddress = ?
