@@ -39,7 +39,7 @@ func GetServiceItemNewIdQuery() (string, error) {
 
 	var sequence int
 	if lastId != "" {
-		sequence, err = parseSequenceNumberForItem(lastId)
+		sequence, err = parseSequenceNumberForServiceItem(lastId)
 		if err != nil {
 			return "", err
 		}
@@ -52,8 +52,8 @@ func GetServiceItemNewIdQuery() (string, error) {
 	return newId, nil
 }
 
-func parseSequenceNumberForItem(lastId string) (int, error) {
-	if len(lastId) < 10 {
+func parseSequenceNumberForServiceItem(lastId string) (int, error) {
+	if len(lastId) < 5 {
 		return 0, fmt.Errorf("invalid ID format: %s", lastId)
 	}
 

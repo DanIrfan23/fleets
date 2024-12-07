@@ -62,7 +62,7 @@ func GetDriverNewIdQuery() (string, error) {
 
 	var sequence int
 	if lastId != "" {
-		sequence, err = parseSequenceNumberForItem(lastId)
+		sequence, err = parseSequenceNumberForDriver(lastId)
 		if err != nil {
 			return "", err
 		}
